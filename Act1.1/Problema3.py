@@ -1,6 +1,7 @@
 import random
 
 def generar_numeros_aleatorios(cantidad):
+    numero = 0
     numeros = []    
     for _ in range(cantidad):
         numero = random.randint(-100, 100)  # Genera un número aleatorio entre -100 y 100

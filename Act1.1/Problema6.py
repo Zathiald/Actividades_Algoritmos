@@ -1,4 +1,5 @@
 def calcular_factorial(numero):
+    factorial = 0
     if numero < 0:
         return "El factorial no está definido para números negativos."
     elif numero == 0 or numero == 1:
