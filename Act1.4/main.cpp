@@ -11,7 +11,7 @@ using namespace std;
  * Fecha de creación/modificación: 22/08/2024
  */
 
-// Función para fusionar dos subarreglos
+// Función para fusionar dos subarreglos Complejidad: O(n)
 void fusionarSubarreglos(vector<double> &arreglo, int indiceIzquierdo, int indiceMedio, int indiceDerecho) {
     int tamanioIzquierdo = indiceMedio - indiceIzquierdo + 1;
     int tamanioDerecho = indiceDerecho - indiceMedio;
@@ -59,7 +59,7 @@ void fusionarSubarreglos(vector<double> &arreglo, int indiceIzquierdo, int indic
     }
 }
 
-// Función principal que implementa MergeSort
+// Función principal que implementa MergeSort Complejidad: O(n log n)
 void ordenarMergeSort(vector<double> &arreglo, int indiceIzquierdo, int indiceDerecho) {
     if (indiceIzquierdo < indiceDerecho) {
         int indiceMedio = indiceIzquierdo + (indiceDerecho - indiceIzquierdo) / 2;
@@ -73,6 +73,7 @@ void ordenarMergeSort(vector<double> &arreglo, int indiceIzquierdo, int indiceDe
     }
 }
 
+// Complejidad: O(n log n)
 int main() {
     int cantidadElementos;
     cin >> cantidadElementos;
