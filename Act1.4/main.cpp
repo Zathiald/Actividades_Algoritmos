@@ -2,85 +2,95 @@
 #include <vector>
 using namespace std;
 
+/*
+ * Descripción breve del programa:
+ * Este programa implementa el algoritmo de ordenamiento MergeSort
+ * para ordenar un arreglo de números en orden descendente.
+ *
+ * Autor: [Tu Nombre]
+ * Fecha de creación/modificación: 22/08/2024
+ */
+
 // Función para fusionar dos subarreglos
-void merge(vector<double> &arr, int left, int mid, int right) {
-    int n1 = mid - left + 1;
-    int n2 = right - mid;
+void fusionarSubarreglos(vector<double> &arreglo, int indiceIzquierdo, int indiceMedio, int indiceDerecho) {
+    int tamanioIzquierdo = indiceMedio - indiceIzquierdo + 1;
+    int tamanioDerecho = indiceDerecho - indiceMedio;
 
     // Subarreglos temporales
-    vector<double> L(n1), R(n2);
+    vector<double> subarregloIzquierdo(tamanioIzquierdo);
+    vector<double> subarregloDerecho(tamanioDerecho);
 
-    // Copiar datos a los subarreglos temporales L[] y R[]
-    for (int i = 0; i < n1; i++)
-        L[i] = arr[left + i];
-    for (int i = 0; i < n2; i++)
-        R[i] = arr[mid + 1 + i];
+    // Copiar datos a los subarreglos temporales
+    for (int i = 0; i < tamanioIzquierdo; i++) {
+        subarregloIzquierdo[i] = arreglo[indiceIzquierdo + i];
+    }
+    for (int j = 0; j < tamanioDerecho; j++) {
+        subarregloDerecho[j] = arreglo[indiceMedio + 1 + j];
+    }
 
-    // Fusionar los subarreglos temporales de nuevo en arr[l..r]
-    int i = 0; // índice inicial de primer subarreglo
-    int j = 0; // índice inicial de segundo subarreglo
-    int k = left; // índice inicial de subarreglo fusionado
+    int i = 0; // Índice inicial del subarreglo izquierdo
+    int j = 0; // Índice inicial del subarreglo derecho
+    int k = indiceIzquierdo; // Índice inicial del subarreglo fusionado
 
-    // Orden descendente
-    while (i < n1 && j < n2) {
-        if (L[i] >= R[j]) {
-            arr[k] = L[i];
+    // Fusionar los subarreglos en orden descendente
+    while (i < tamanioIzquierdo && j < tamanioDerecho) {
+        if (subarregloIzquierdo[i] >= subarregloDerecho[j]) {
+            arreglo[k] = subarregloIzquierdo[i];
             i++;
         } else {
-            arr[k] = R[j];
+            arreglo[k] = subarregloDerecho[j];
             j++;
         }
         k++;
     }
 
-    // Copiar los elementos restantes de L[], si hay alguno
-    while (i < n1) {
-        arr[k] = L[i];
+    // Copiar los elementos restantes del subarreglo izquierdo, si los hay
+    while (i < tamanioIzquierdo) {
+        arreglo[k] = subarregloIzquierdo[i];
         i++;
         k++;
     }
 
-    // Copiar los elementos restantes de R[], si hay alguno
-    while (j < n2) {
-        arr[k] = R[j];
+    // Copiar los elementos restantes del subarreglo derecho, si los hay
+    while (j < tamanioDerecho) {
+        arreglo[k] = subarregloDerecho[j];
         j++;
         k++;
     }
 }
 
 // Función principal que implementa MergeSort
-void mergeSort(vector<double> &arr, int left, int right) {
-    if (left < right) {
-        // Encuentra el punto medio
-        int mid = left + (right - left) / 2;
+void ordenarMergeSort(vector<double> &arreglo, int indiceIzquierdo, int indiceDerecho) {
+    if (indiceIzquierdo < indiceDerecho) {
+        int indiceMedio = indiceIzquierdo + (indiceDerecho - indiceIzquierdo) / 2;
 
         // Ordenar la primera y segunda mitad
-        mergeSort(arr, left, mid);
-        mergeSort(arr, mid + 1, right);
+        ordenarMergeSort(arreglo, indiceIzquierdo, indiceMedio);
+        ordenarMergeSort(arreglo, indiceMedio + 1, indiceDerecho);
 
         // Fusionar las mitades ordenadas
-        merge(arr, left, mid, right);
+        fusionarSubarreglos(arreglo, indiceIzquierdo, indiceMedio, indiceDerecho);
     }
 }
 
 int main() {
-    int N;
-    cin >> N;
+    int cantidadElementos;
+    cin >> cantidadElementos;
 
-    vector<double> arr(N);
+    vector<double> arreglo(cantidadElementos);
 
-    // Leer los N valores
-    for (int i = 0; i < N; i++) {
-        cin >> arr[i];
+    // Leer los valores del arreglo
+    for (int i = 0; i < cantidadElementos; i++) {
+        cin >> arreglo[i];
     }
 
     // Aplicar MergeSort
-    mergeSort(arr, 0, N - 1);
+    ordenarMergeSort(arreglo, 0, cantidadElementos - 1);
 
     // Imprimir los valores ordenados de mayor a menor
-    for (int i = 0; i < N; i++) {
-        cout << arr[i];
-        if (i < N - 1) {
+    for (int i = 0; i < cantidadElementos; i++) {
+        cout << arreglo[i];
+        if (i < cantidadElementos - 1) {
             cout << ", ";
         }
     }
