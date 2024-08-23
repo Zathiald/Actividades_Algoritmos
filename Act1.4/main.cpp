@@ -5,9 +5,9 @@ using namespace std;
 /*
  * Descripción breve del programa:
  * Este programa implementa el algoritmo de ordenamiento MergeSort
- * para ordenar un arreglo de números en orden descendente.
+ * para ordenar un arreglo de números en orden descendente aplicando la ideologia de Dividir y Venceras.
  *
- * Autor: [Tu Nombre]
+ * Autores: Samir Baidon Pardo A01705403, Angel Francisco Garcia Guzman A01704203, Alejandro Muñoz Shimano A01705550
  * Fecha de creación/modificación: 22/08/2024
  */
 
