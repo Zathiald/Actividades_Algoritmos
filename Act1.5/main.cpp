@@ -2,11 +2,13 @@
 #include <vector>
 #include <algorithm>
 
-// Breve descripción del programa: 
-// Este programa calcula el número mínimo de monedas necesarias para dar un cambio, utilizando el algoritmo avaro.
+/*
+ * Programa para resolver el problema del cambio de monedas utilizando algoritmos avaros.
+ * 
+ * //Autores: Samir Baidon Pardo A01705403, Angel Francisco Garcia Guzman A01704203, Alejandro Muñoz Shimano A01705550
+ * //Fecha de creación/modificación: 29/08/2024
+ */
 
-//Autores: Samir Baidon Pardo A01705403, Angel Francisco Garcia Guzman A01704203, Alejandro Muñoz Shimano A01705550
-//Fecha de creación/modificación: 29/08/2024
 
 int main() {
     int numDenominaciones;
