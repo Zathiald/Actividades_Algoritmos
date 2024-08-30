@@ -1,8 +1,8 @@
 /*
- * Descripción: Programa que calcula la distribución de monedas de cambio 
+ * Descripción: Programa que calcula la distribución de monedas de cambio
  *              utilizando un algoritmo avaro.
- * Autores: Samir Baidon Pardo A01705403, 
- *              Angel Francisco Garcia Guzman A01704203, 
+ * Autores: Samir Baidon Pardo A01705403,
+ *              Angel Francisco Garcia Guzman A01704203,
  *              Alejandro Muñoz Shimano A01705550
  * Fecha de creación/modificación: 22/08/2024
  */
@@ -12,18 +12,24 @@
 #include <algorithm>
 
 // Función que calcula el cambio utilizando un algoritmo avaro
-// Complejidad O(n), pues itera una vez por cada denominación
 std::vector<int> calcularCambio(int pago, int precio, const std::vector<int>& denominaciones) {
     int cambio = pago - precio;
     std::vector<int> monedasUsadas(denominaciones.size(), 0);
 
-    // Recorrer las denominaciones de mayor a menor
-    for (size_t i = 0; i < denominaciones.size(); ++i) {
-        // Calcular cuántas monedas de esta denominación se pueden usar
-        monedasUsadas[i] = cambio / denominaciones[i];
-        // Reducir el cambio restante
-        cambio %= denominaciones[i];
+    if (pago > precio){
+        // Recorrer las denominaciones de mayor a menor
+        for (size_t i = 0; i < denominaciones.size(); ++i) {
+            // Calcular cuántas monedas de esta denominación se pueden usar
+            monedasUsadas[i] = cambio / denominaciones[i];
+            // Reducir el cambio restante
+            cambio %= denominaciones[i];
+        }
     }
+    else {
+        std::cout << "No se pago el producto completo\n";
+    }
+
+
 
     return monedasUsadas;
 }
@@ -55,3 +61,4 @@ int main() {
 
     return 0;
 }
+
