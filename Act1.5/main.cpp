@@ -12,6 +12,7 @@
 #include <algorithm>
 
 // Función que calcula el cambio utilizando un algoritmo avaro
+// Complejidad O(n), pues itera una vez por cada denominación
 std::vector<int> calcularCambio(int pago, int precio, const std::vector<int>& denominaciones) {
     int cambio = pago - precio;
     std::vector<int> monedasUsadas(denominaciones.size(), 0);
