@@ -29,6 +29,8 @@ std::vector<int> calcularCambio(int pago, int precio, const std::vector<int>& de
         std::cout << "No se pago el producto completo\n";
     }
 
+
+
     return monedasUsadas;
 }
 
@@ -59,6 +61,5 @@ int main() {
             std::cout << cambio[i] << " moneda(s) de " << denominaciones[i] << "\n";
         }
     }
-
     return 0;
 }
