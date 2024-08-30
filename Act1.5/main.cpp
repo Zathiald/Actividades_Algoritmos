@@ -1,50 +1,56 @@
+/*
+ * Descripción: Programa que calcula la distribución de monedas de cambio 
+ *              utilizando un algoritmo avaro.
+ * Autores: Samir Baidon Pardo A01705403, 
+ *              Angel Francisco Garcia Guzman A01704203, 
+ *              Alejandro Muñoz Shimano A01705550
+ * Fecha de creación/modificación: 22/08/2024
+ */
+
 #include <iostream>
 #include <vector>
 #include <algorithm>
 
-/*
- * Programa para resolver el problema del cambio de monedas utilizando algoritmos avaros.
- * 
- * //Autores: Samir Baidon Pardo A01705403, Angel Francisco Garcia Guzman A01704203, Alejandro Muñoz Shimano A01705550
- * //Fecha de creación/modificación: 29/08/2024
- */
+// Función que calcula el cambio utilizando un algoritmo avaro
+std::vector<int> calcularCambio(int pago, int precio, const std::vector<int>& denominaciones) {
+    int cambio = pago - precio;
+    std::vector<int> monedasUsadas(denominaciones.size(), 0);
 
-
-int main() {
-    int numDenominaciones;
-    std::cin >> numDenominaciones;
-    
-    std::vector<int> denominaciones(numDenominaciones);
-    
-    // Leer las denominaciones
-    for (int i = 0; i < numDenominaciones; i++) {
-        std::cin >> denominaciones[i];
-    }
-    
-    // Leer los valores de P y Q
-    int p, q;
-    std::cin >> p >> q;
-    
-    // Calcular el cambio
-    int cambio = q - p;
-    
-    // Ordenar las denominaciones de mayor a menor
-    std::sort(denominaciones.rbegin(), denominaciones.rend());
-    
-    // Vector para almacenar el número de monedas de cada denominación
-    std::vector<int> numMonedas(numDenominaciones, 0);
-    
-    // Aplicar el algoritmo avaro para calcular el número de monedas de cada denominación
-    for (int i = 0; i < numDenominaciones && cambio > 0; i++) {
-        numMonedas[i] = cambio / denominaciones[i];
+    // Recorrer las denominaciones de mayor a menor
+    for (size_t i = 0; i < denominaciones.size(); ++i) {
+        // Calcular cuántas monedas de esta denominación se pueden usar
+        monedasUsadas[i] = cambio / denominaciones[i];
+        // Reducir el cambio restante
         cambio %= denominaciones[i];
     }
-    
-    // Imprimir el número de monedas de cada denominación
-    for (int i = 0; i < numDenominaciones; i++) {
-        std::cout << numMonedas[i] << std::endl;
-    }
-    
-    return 0;
+
+    return monedasUsadas;
 }
 
+int main() {
+    int numeroDenominaciones;
+    std::cin >> numeroDenominaciones;
+
+    std::vector<int> denominaciones(numeroDenominaciones);
+
+    // Leer las denominaciones de las monedas
+    for (int i = 0; i < numeroDenominaciones; ++i) {
+        std::cin >> denominaciones[i];
+    }
+
+    int precio, pago;
+    std::cin >> precio >> pago;
+
+    // Ordenar las denominaciones en orden descendente
+    std::sort(denominaciones.begin(), denominaciones.end(), std::greater<int>());
+
+    // Calcular el cambio
+    std::vector<int> cambio = calcularCambio(pago, precio, denominaciones);
+
+    // Imprimir el número de monedas de cada denominación utilizadas
+    for (int moneda : cambio) {
+        std::cout << moneda << std::endl;
+    }
+
+    return 0;
+}
