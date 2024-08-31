@@ -11,12 +11,19 @@
 #include <vector>
 #include <algorithm>
 
-// Función que calcula el cambio utilizando un algoritmo avaro
+/**
+ * @brief Calcula el cambio utilizando un algoritmo avaro.
+ * @param pago La cantidad de dinero dada por el cliente.
+ * @param precio El precio del producto.
+ * @param denominaciones Un vector que contiene las denominaciones de las monedas disponibles.
+ * @return Un vector con el número de monedas utilizadas de cada denominación.
+ * @complexity O(n) donde n es el número de denominaciones.
+ */
 std::vector<int> calcularCambio(int pago, int precio, const std::vector<int>& denominaciones) {
     int cambio = pago - precio;
     std::vector<int> monedasUsadas(denominaciones.size(), 0);
 
-    if (pago > precio){
+    if (pago > precio) {
         // Recorrer las denominaciones de mayor a menor
         for (size_t i = 0; i < denominaciones.size(); ++i) {
             // Calcular cuántas monedas de esta denominación se pueden usar
@@ -24,12 +31,9 @@ std::vector<int> calcularCambio(int pago, int precio, const std::vector<int>& de
             // Reducir el cambio restante
             cambio %= denominaciones[i];
         }
-    }
-    else {
+    } else {
         std::cout << "No se pago el producto completo\n";
     }
-
-
 
     return monedasUsadas;
 }
@@ -61,5 +65,8 @@ int main() {
             std::cout << cambio[i] << " moneda(s) de " << denominaciones[i] << "\n";
         }
     }
+
     return 0;
+    // Complejidad total: O(n log n)
+    // Donde n es el número de denominaciones.
 }

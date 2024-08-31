@@ -1,9 +1,10 @@
 /*
- * Programa para resolver el problema del cambio de monedas utilizando
- * programación dinámica y algoritmos avaros.
- * 
- * //Autores: Samir Baidon Pardo A01705403, Angel Francisco Garcia Guzman A01704203, Alejandro Muñoz Shimano A01705550
- * //Fecha de creación/modificación: 29/08/2024
+ * Descripción: Programa para resolver el problema del cambio de monedas utilizando
+ *              programación dinámica y algoritmos avaros.
+ * Autores: Samir Baidon Pardo A01705403,
+ *          Angel Francisco Garcia Guzman A01704203,
+ *          Alejandro Muñoz Shimano A01705550
+ * Fecha de creación/modificación: 29/08/2024
  */
 
 #include <iostream>
@@ -13,11 +14,11 @@
 
 using namespace std;
 
-/*
- * Función que resuelve el problema del cambio utilizando un algoritmo avaro.
- * 
+/**
+ * @brief Resuelve el problema del cambio utilizando un algoritmo avaro.
  * @param denominaciones Un vector que contiene las denominaciones disponibles de las monedas.
  * @param cambio La cantidad de cambio a entregar.
+ * @complexity O(n) donde n es el número de denominaciones.
  */
 void calcularCambioAvaro(vector<int> &denominaciones, int cambio) {
     sort(denominaciones.rbegin(), denominaciones.rend()); // Ordenar las monedas de mayor a menor
@@ -35,11 +36,11 @@ void calcularCambioAvaro(vector<int> &denominaciones, int cambio) {
     }
 }
 
-/*
- * Función que resuelve el problema del cambio utilizando programación dinámica.
- * 
+/**
+ * @brief Resuelve el problema del cambio utilizando programación dinámica.
  * @param denominaciones Un vector que contiene las denominaciones disponibles de las monedas.
  * @param cambio La cantidad de cambio a entregar.
+ * @complexity O(n * m) donde n es la cantidad de cambio y m es el número de denominaciones.
  */
 void calcularCambioDinamico(vector<int> &denominaciones, int cambio) {
     sort(denominaciones.rbegin(), denominaciones.rend()); // Ordenar las monedas de mayor a menor
@@ -95,4 +96,6 @@ int main() {
     calcularCambioDinamico(denominaciones, cambio);
 
     return 0;
+    // Complejidad total: O(n * m)
+    // Donde n es la cantidad de cambio y m es el número de denominaciones.
 }
