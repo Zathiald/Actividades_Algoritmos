@@ -11,6 +11,8 @@
 
 using namespace std;
 
+const int CELDA_TRANSITABLE = 1;
+
 /**
  * Imprime la solución del laberinto.
  * @param solucion Matriz que representa la solución del laberinto.
@@ -35,7 +37,7 @@ void imprimirSolucion(const vector<vector<int>>& solucion) {
 bool esSeguro(int x, int y, const vector<vector<int>>& laberinto, const vector<vector<int>>& solucion) {
     int filas = laberinto.size();
     int columnas = laberinto[0].size();
-    return (x >= 0 && x < filas && y >= 0 && y < columnas && laberinto[x][y] == 1 && solucion[x][y] == 0);
+    return (x >= 0 && x < filas && y >= 0 && y < columnas && laberinto[x][y] == CELDA_TRANSITABLE && solucion[x][y] == 0);
 }
 
 /**
@@ -51,12 +53,12 @@ bool resolverLaberintoBacktracking(int x, int y, const vector<vector<int>>& labe
     int columnas = laberinto[0].size();
     
     if (x == filas - 1 && y == columnas - 1) {
-        solucion[x][y] = 1;
+        solucion[x][y] = CELDA_TRANSITABLE;
         return true;
     }
     
     if (esSeguro(x, y, laberinto, solucion)) {
-        solucion[x][y] = 1;
+        solucion[x][y] = CELDA_TRANSITABLE;
         
         if (resolverLaberintoBacktracking(x + 1, y, laberinto, solucion)) return true;
         if (resolverLaberintoBacktracking(x, y + 1, laberinto, solucion)) return true;
@@ -102,12 +104,12 @@ bool resolverLaberintoBranchAndBound(int x, int y, const vector<vector<int>>& la
     int columnas = laberinto[0].size();
     
     if (x == filas - 1 && y == columnas - 1) {
-        solucion[x][y] = 1;
+        solucion[x][y] = CELDA_TRANSITABLE;
         return true;
     }
     
     if (esSeguro(x, y, laberinto, solucion)) {
-        solucion[x][y] = 1;
+        solucion[x][y] = CELDA_TRANSITABLE;
         
         if (resolverLaberintoBranchAndBound(x + 1, y, laberinto, solucion)) return true;
         if (resolverLaberintoBranchAndBound(x, y + 1, laberinto, solucion)) return true;
