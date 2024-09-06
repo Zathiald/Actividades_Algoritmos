@@ -16,6 +16,7 @@ const int CELDA_TRANSITABLE = 1;
 
 /**
  * Imprime la solución del laberinto.
+ * Complejidad: O(n * m), donde n es el número de filas y m el número de columnas.
  * @param solucion Matriz que representa la solución del laberinto.
  */
 void imprimirSolucion(const vector<vector<int>>& solucion) {
@@ -29,11 +30,7 @@ void imprimirSolucion(const vector<vector<int>>& solucion) {
 
 /**
  * Verifica si es seguro moverse a la posición (x, y) en el laberinto.
- * Se avanza de las siguientes formas:
- * - Hacia adelante (x + 1)
- * - Hacia abajo (y + 1)
- * - Hacia atrás (x - 1)
- * - Hacia arriba (y - 1)
+ * Complejidad: O(1) porque es una simple verificación de límites y condiciones.
  * @param x Coordenada x de la casilla.
  * @param y Coordenada y de la casilla.
  * @param laberinto Matriz que representa el laberinto.
@@ -48,8 +45,7 @@ bool esSeguro(int x, int y, const vector<vector<int>>& laberinto, const vector<v
 
 /**
  * Función recursiva que resuelve el laberinto utilizando Backtracking.
- * Criterio de avance: Se intenta avanzar en el siguiente orden: derecha, abajo, izquierda, arriba.
- * Retrocede si no encuentra un camino seguro.
+ * Complejidad: O(4^(n*m)), ya que en cada casilla se pueden tomar hasta 4 direcciones diferentes.
  * @param x Coordenada x de la casilla actual.
  * @param y Coordenada y de la casilla actual.
  * @param laberinto Matriz que representa el laberinto.
@@ -81,6 +77,7 @@ bool resolverLaberintoBacktracking(int x, int y, const vector<vector<int>>& labe
 
 /**
  * Resuelve el laberinto utilizando la técnica de Backtracking.
+ * Complejidad: O(4^(n*m)), depende de la complejidad de la función recursiva resolverLaberintoBacktracking.
  * @param laberinto Matriz que representa el laberinto.
  * @return true si se encuentra una solución, false en caso contrario.
  */
@@ -101,7 +98,7 @@ bool resolverLaberintoConBacktracking(const vector<vector<int>>& laberinto) {
 
 /**
  * Función recursiva que resuelve el laberinto utilizando Ramificación y Poda.
- * Criterio de avance: Solo avanza a la derecha o hacia abajo. Poda cuando no encuentra camino.
+ * Complejidad: O(2^(n+m)), ya que solo se exploran las direcciones hacia adelante o hacia abajo, reduciendo las ramas posibles.
  * @param x Coordenada x de la casilla actual.
  * @param y Coordenada y de la casilla actual.
  * @param laberinto Matriz que representa el laberinto.
@@ -131,6 +128,7 @@ bool resolverLaberintoBranchAndBound(int x, int y, const vector<vector<int>>& la
 
 /**
  * Resuelve el laberinto utilizando la técnica de Ramificación y Poda.
+ * Complejidad: O(2^(n+m)), debido a la naturaleza de la técnica de Ramificación y Poda, que reduce las ramas exploradas.
  * @param laberinto Matriz que representa el laberinto.
  * @return true si se encuentra una solución, false en caso contrario.
  */
@@ -151,8 +149,7 @@ bool resolverLaberintoConBranchAndBound(const vector<vector<int>>& laberinto) {
 
 /**
  * Lee los datos del laberinto desde la entrada estándar y verifica que sean correctos.
- * Solo acepta enteros positivos para las dimensiones del laberinto
- * y valores binarios (0 o 1) para las celdas del laberinto.
+ * Complejidad: O(n * m), ya que lee una matriz completa de n filas y m columnas.
  * @param filas Cantidad de filas del laberinto.
  * @param columnas Cantidad de columnas del laberinto.
  * @return Matriz que representa el laberinto.
@@ -178,6 +175,10 @@ vector<vector<int>> leerLaberinto(int filas, int columnas) {
     return laberinto;
 }
 
+/**
+ * Función principal del programa.
+ * Complejidad total: O(4^(n*m)) debido a la utilización de la técnica de Backtracking, que tiene la mayor complejidad entre las funciones.
+ */
 int main() {
     int filas, columnas;
     
@@ -206,15 +207,10 @@ int main() {
     
     vector<vector<int>> laberinto = leerLaberinto(filas, columnas);
     
-    cout << "Laberinto inicial:\n";
-    imprimirSolucion(laberinto);
-    
-    cout << endl;
-    
+    // Resolver con Backtracking
     resolverLaberintoConBacktracking(laberinto);
     
-    cout << endl;
-    
+    // Resolver con Ramificación y Poda
     resolverLaberintoConBranchAndBound(laberinto);
     
     return 0;
