@@ -1,8 +1,8 @@
 #include <iostream>
 #include <fstream>
+#include <sstream>
 #include <vector>
 #include <iomanip>
-#include <sstream>
 
 using namespace std;
 
@@ -18,7 +18,7 @@ void printMatrix(const std::vector<std::vector<char>>& matrix) {
     for (const auto& row : matrix) {
         for (char c : row) {
             if (c == '\0') {
-                std::cout << ' ' << ' '; // Espacio vacío
+                std::cout << "  "; // Espacio vacío
             } else if (c == '\n') {
                 std::cout << "- "; // Representación de salto de línea
             } else {
@@ -85,7 +85,11 @@ int main() {
     std::vector<int> a(n, 0);
     for (int col = 0; col < n; ++col) {
         for (int row = 0; row < rows; ++row) {
-            a[col] += (unsigned char)matrix[row][col]; // Sumar ASCII
+            char current = matrix[row][col];
+            // Solo sumar si el carácter es válido
+            if (current != '\0' && current != '[') {
+                a[col] += static_cast<unsigned char>(current); // Sumar ASCII
+            }
         }
         a[col] %= 256; // Modulo 256
     }
@@ -97,8 +101,13 @@ int main() {
     std::cout << "\n";
 
     std::string hexOutput = toHex(a);
-    std::cout << "Representación hexadecimal: " << hexOutput << "\n";
-    std::cout << "Longitud de la cadena de salida: " << hexOutput.length() / 2 << "\n"; // Cada dos dígitos representa un byte
+    // Dividir la salida en grupos de 4 bytes
+    std::cout << "Representación hexadecimal: ";
+    for (size_t i = 0; i < hexOutput.length(); i += 8) {
+        std::cout << hexOutput.substr(i, 8) << " ";
+    }
+    std::cout << "\n";
 
     return 0;
 }
+
