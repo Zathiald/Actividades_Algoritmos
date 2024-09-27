@@ -13,22 +13,25 @@ using namespace std;
 * Fecha de creación: 24/09/2024
 */
 
-void printMatrix(const std::vector<std::vector<char>>& matrix) {
+// Función para imprimir la matriz generada
+void printMatrix(const std::vector<std::vector<char>>& matrix, int n) {
     std::cout << "Matriz generada por el algoritmo:\n";
-    for (const auto& row : matrix) {
-        for (char c : row) {
-            if (c == '\0') {
-                std::cout << "  "; // Espacio vacío
-            } else if (c == '\n') {
-                std::cout << "- "; // Representación de salto de línea
+    for (int row = 0; row < matrix.size(); ++row) {
+        for (int col = 0; col < n; ++col) {
+            char c = matrix[row][col];
+            if (c == '[') {
+                std::cout << "[ "; // Mostrar los '[' como '[ '
+            } else if (c == '-') {
+                std::cout << "- "; // Mostrar guiones para saltos de línea
             } else {
-                std::cout << c << ' ';
+                std::cout << c << ' '; // Mostrar otros caracteres
             }
         }
         std::cout << '\n';
     }
 }
 
+// Función para convertir el arreglo a una representación hexadecimal
 std::string toHex(const std::vector<int>& a) {
     std::ostringstream oss;
     for (int num : a) {
@@ -65,29 +68,38 @@ int main() {
     file.close();
 
     // Crear matriz
-    int rows = (characters.size() + n - 1) / n; // Total de filas
-    std::vector<std::vector<char>> matrix(rows, std::vector<char>(n, '\0'));
+    int rows = (characters.size() + n - 1) / n; // Total de filas necesarias
+    std::vector<std::vector<char>> matrix(rows, std::vector<char>(n, '[')); // Rellenar con '[' inicialmente
 
+    int currentIndex = 0;
     for (int i = 0; i < characters.size(); ++i) {
-        matrix[i / n][i % n] = characters[i];
-    }
-
-    // Rellenar el último renglón si es necesario
-    if (characters.size() % n != 0) {
-        for (int i = characters.size() % n; i < n; ++i) {
-            matrix[rows - 1][i] = '['; // Rellenar con '['
+        if (characters[i] == '\n') {
+            // Indicar el salto de línea con un guion
+            matrix[currentIndex / n][currentIndex % n] = '-';
+            currentIndex++;
+            if (currentIndex % n == 0) { // Si al agregar el guion llegamos al final de la fila
+                continue; // Saltamos para no dejar guion en el siguiente caracter
+            }
+        } else {
+            matrix[currentIndex / n][currentIndex % n] = characters[i];
+            currentIndex++;
         }
     }
 
-    printMatrix(matrix);
+    // Asegurarse de que todas las celdas vacías se llenen con '['
+    for (int i = currentIndex; i < rows * n; ++i) {
+        matrix[i / n][i % n] = '[';
+    }
+
+    printMatrix(matrix, n);
 
     // Calcular el arreglo a
     std::vector<int> a(n, 0);
     for (int col = 0; col < n; ++col) {
         for (int row = 0; row < rows; ++row) {
             char current = matrix[row][col];
-            // Solo sumar si el carácter es válido
-            if (current != '\0' && current != '[') {
+            // Verificar si el carácter es imprimible y no es de relleno ni un guion
+            if (current != '[' && current != '-') {
                 a[col] += static_cast<unsigned char>(current); // Sumar ASCII
             }
         }
@@ -110,4 +122,3 @@ int main() {
 
     return 0;
 }
-
