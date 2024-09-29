@@ -97,6 +97,13 @@ int main() {
         a[col] = suma_columna % 256; // Modulo 256 después de sumar
     }
 
+    // Imprimir el arreglo a
+    std::cout << "Arreglo a: ";
+    for (int i = 0; i < a.size(); ++i) {
+    std::cout << a[i] << " ";
+    }
+    std::cout << std::endl; // Para imprimir un salto de línea al final
+
     std::string hexOutput = toHex(a);
     int groupSize = n / 4; // Determinar tamaño de los grupos hexadecimales
 
