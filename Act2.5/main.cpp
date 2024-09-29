@@ -11,6 +11,8 @@
 #include <string>
 #include <algorithm>
 
+// Complejidad: O(n^2), pues hay dos loops anidados.
+
 // Función que genera todos los substrings de un string dado.
 // @param input: Cadena de entrada para generar substrings.
 // @return vector de strings con todos los substrings generados.
