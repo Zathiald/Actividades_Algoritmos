@@ -13,6 +13,8 @@ using namespace std;
 * Fecha de creación: 24/09/2024
 */
 
+// La complejidad es linear, pues mientras más caracteres haya en el archivo más veces se tendrá que recorrer en la matriz. 
+
 void printMatrix(const std::vector<std::vector<char>>& matrix) {
     std::cout << "Matriz generada por el algoritmo:\n";
     for (const auto& row : matrix) {
