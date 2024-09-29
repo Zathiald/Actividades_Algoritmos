@@ -43,7 +43,7 @@ int main() {
 
     std::cout << "Ingrese el nombre del archivo (ej. datos.txt): ";
     std::cin >> filename;
-    std::cout << "Ingrese un entero n (multiplo de 4 entre 16 y 64): ";
+    std::cout << "Ingrese un entero n (múltiplo de 4 entre 16 y 64): ";
     std::cin >> n;
 
     if (n < 16 || n > 64 || n % 4 != 0) {
@@ -63,6 +63,12 @@ int main() {
         characters.push_back(ch);
     }
     file.close();
+
+    // std::cout << "Caracteres leídos del archivo:\n";
+    // for (char c : characters) {
+    //     std::cout << c;
+    // }
+    // std::cout << "\n";
 
     // Crear matriz
     int rows = (characters.size() + n - 1) / n; // Total de filas
@@ -84,30 +90,33 @@ int main() {
     // Calcular el arreglo a
     std::vector<int> a(n, 0);
     for (int col = 0; col < n; ++col) {
+        int suma_columna = 0;
+        // std::cout << "Columna " << col + 1 << ": ";
         for (int row = 0; row < rows; ++row) {
             char current = matrix[row][col];
             // Solo sumar si el carácter es válido
-            if (current != '\0' && current != '[') {
-                a[col] += static_cast<unsigned char>(current); // Sumar ASCII
+            if (current != '\0') {
+                suma_columna += static_cast<unsigned char>(current); // Sumar ASCII
+                // std::cout << current << " (" << static_cast<int>(current) << "), ";
             }
         }
-        a[col] %= 256; // Modulo 256
+        a[col] = suma_columna % 256; // Modulo 256 después de sumar
+        // std::cout << "Suma = " << suma_columna << ", Modulo 256 = " << a[col] << "\n";
     }
 
-    std::cout << "Arreglo de longitud 'n' que muestra la suma de las columnas con el modulo 256:\n";
-    for (int value : a) {
-        std::cout << value << " ";
-    }
-    std::cout << "\n";
+    // std::cout << "Arreglo de longitud 'n' que muestra la suma de las columnas con el modulo 256:\n";
+    // for (int value : a) {
+    //     std::cout << value << " ";
+    // }
+    // std::cout << "\n";
 
     std::string hexOutput = toHex(a);
-    // Dividir la salida en grupos de 4 bytes
+    // Imprimir la salida en grupos de 2 bytes (4 dígitos hexadecimales)
     std::cout << "Representación hexadecimal: ";
-    for (size_t i = 0; i < hexOutput.length(); i += 8) {
-        std::cout << hexOutput.substr(i, 8) << " ";
+    for (size_t i = 0; i < hexOutput.length(); i += 4) {
+        std::cout << hexOutput.substr(i, 4) << " ";
     }
     std::cout << "\n";
 
     return 0;
 }
-
