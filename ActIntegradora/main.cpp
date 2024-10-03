@@ -27,8 +27,8 @@ std::string normalizar(const std::string &texto) {
     return resultado;
 }
 
-// Busca si el codigo está contenido en la transmisión
-bool buscarCodigo(const std::string &transmision, const std::string &codigo) {
+// Busca si el codigo está contenido en la transmisión y retorna las posiciones inicial y final si lo encuentra
+bool buscarCodigo(const std::string &transmision, const std::string &codigo, size_t &posicionInicial, size_t &posicionFinal) {
     size_t n = transmision.size();
     size_t m = codigo.size();
 
@@ -41,6 +41,8 @@ bool buscarCodigo(const std::string &transmision, const std::string &codigo) {
             ++j;
         }
         if (j == m) {
+            posicionInicial = i;
+            posicionFinal = i + m - 1;
             return true; // Se encontró una coincidencia
         }
     }
@@ -63,9 +65,13 @@ int main() {
     // Para cada transmisión y cada código, verifica si el código está contenido en la transmisión
     for (size_t i = 0; i < transmisiones.size(); ++i) {
         for (size_t j = 0; j < mcodes.size(); ++j) {
-            bool encontrado = buscarCodigo(transmisiones[i], mcodes[j]);
+            size_t posicionInicial = 0;
+            size_t posicionFinal = 0;
+            bool encontrado = buscarCodigo(transmisiones[i], mcodes[j], posicionInicial, posicionFinal);
+
             if (encontrado) {
-                std::cout << "true" << std::endl;
+                std::cout << "true (Posición inicial: " << posicionInicial 
+                          << ", Posición final: " << posicionFinal << ")" << std::endl;
             } else {
                 std::cout << "false" << std::endl;
             }
@@ -74,4 +80,3 @@ int main() {
 
     return 0;
 }
-

@@ -3,4 +3,4 @@ Alejandro Muñoz Shimano A01705550
 Samir Baidon Pardo A01705403
 
 Alejandro: Yo trabajé en los primeros pasos del programa, desde la lectura de los archivos hasta la función que checa si hay código maligno en las transmisiones y regresa un true o false.
-
+Samir: Me encargue de que se mostrara la posicion inicial a final de los casos en donde los strings se encuentran en el texto.
