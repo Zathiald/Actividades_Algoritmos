@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include <cctype>
+#include <tuple> 
 
 // Lee el contenido como un string
 std::string leerArchivo(const std::string &nombreArchivo) {
@@ -49,6 +50,31 @@ bool buscarCodigo(const std::string &transmision, const std::string &codigo, siz
     return false; // No se encontró ninguna coincidencia
 }
 
+// Encuentra el substring común más largo entre dos transmisiones y retorna las posiciones en ambas transmisiones
+std::tuple<int, int, int, int> substringComunMasLargo(const std::string &transmision1, const std::string &transmision2) {
+    int n = transmision1.size();
+    int m = transmision2.size();
+    std::vector<std::vector<int>> dp(n + 1, std::vector<int>(m + 1, 0));
+    int longitudMax = 0;
+    int finIdx1 = 0;
+    int finIdx2 = 0;
+
+    for (int i = 1; i <= n; ++i) {
+        for (int j = 1; j <= m; ++j) {
+            if (transmision1[i - 1] == transmision2[j - 1]) {
+                dp[i][j] = dp[i - 1][j - 1] + 1;
+                if (dp[i][j] > longitudMax) {
+                    longitudMax = dp[i][j];
+                    finIdx1 = i - 1; // Índice donde termina el substring en transmision1
+                    finIdx2 = j - 1; // Índice donde termina el substring en transmision2
+                }
+            }
+        }
+    }
+
+    return {finIdx1 - longitudMax + 2, finIdx1 + 1, finIdx2 - longitudMax + 2, finIdx2 + 1}; // Posiciones desde 1
+}
+
 int main() {
     std::string transmision1 = normalizar(leerArchivo("transmission1.txt"));
     std::string transmision2 = normalizar(leerArchivo("transmission2.txt"));
@@ -77,6 +103,13 @@ int main() {
             }
         }
     }
+
+    // Parte 3: Encontrar el substring común más largo entre las transmisiones y las posiciones en ambas
+    int inicio1, fin1, inicio2, fin2;
+    std::tie(inicio1, fin1, inicio2, fin2) = substringComunMasLargo(transmision1, transmision2);
+
+    std::cout << "Transmisión 1: " << inicio1 << " " << fin1 << std::endl;
+    std::cout << "Transmisión 2: " << inicio2 << " " << fin2 << std::endl;
 
     return 0;
 }
