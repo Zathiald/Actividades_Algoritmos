@@ -1,58 +1,67 @@
 #include <iostream>
 #include <vector>
 #include <iomanip>
+
 using namespace std;
 
+/*
+ * Descripción breve del programa: 
+ * Este programa resuelve el problema de la mochila utilizando programación dinámica.
+ * Autor: Alejandro Muñoz Shimano A01705550, Ángel Francisco García Guzmán A01704203, Samir Baidon Pardo A01705403
+ * Fecha de creación/modificación: 2024-10-31
+ */
+
 // Función para resolver el problema de la mochila
-int knapsack(int N, vector<int> valores, vector<int> pesos, int W) {
-    vector<vector<int>> dp(N + 1, vector<int>(W + 1, 0));
+int knapsack(int numberOfItems, vector<int> itemValues, vector<int> itemWeights, int maxWeight) {
+    vector<vector<int>> dp(numberOfItems + 1, vector<int>(maxWeight + 1, 0));
 
     // Llenando la matriz dp
-    for (int i = 1; i <= N; ++i) {
-        for (int w = 0; w <= W; ++w) {
-            if (pesos[i - 1] <= w) {
-                dp[i][w] = max(dp[i - 1][w], dp[i - 1][w - pesos[i - 1]] + valores[i - 1]);
+    for (int i = 1; i <= numberOfItems; ++i) {
+        for (int weight = 0; weight <= maxWeight; ++weight) {
+            if (itemWeights[i - 1] <= weight) {
+                dp[i][weight] = max(dp[i - 1][weight], dp[i - 1][weight - itemWeights[i - 1]] + itemValues[i - 1]);
             } else {
-                dp[i][w] = dp[i - 1][w];
+                dp[i][weight] = dp[i - 1][weight];
             }
         }
     }
 
     // Mostrar la matriz generada
     cout << "Matriz generada:" << endl;
-    for (int i = 0; i <= N; ++i) {
-        for (int w = 0; w <= W; ++w) {
-            cout << setw(4) << dp[i][w];
+    for (int i = 0; i <= numberOfItems; ++i) {
+        for (int weight = 0; weight <= maxWeight; ++weight) {
+            cout << setw(4) << dp[i][weight];
         }
         cout << endl;
     }
 
-    return dp[N][W];
+    return dp[numberOfItems][maxWeight];
 }
 
+// Función principal del programa
 int main() {
-    int N, W;
+    int numberOfItems, maxWeight;
     
     cout << "Número de elementos: ";
-    cin >> N;
+    cin >> numberOfItems;
     
-    vector<int> valores(N), pesos(N);
+    vector<int> itemValues(numberOfItems), itemWeights(numberOfItems);
     
     cout << "Beneficios:" << endl;
-    for (int i = 0; i < N; ++i) {
-        cin >> valores[i];
+    for (int i = 0; i < numberOfItems; ++i) {
+        cin >> itemValues[i];
     }
     
     cout << "Pesos:" << endl;
-    for (int i = 0; i < N; ++i) {
-        cin >> pesos[i];
+    for (int i = 0; i < numberOfItems; ++i) {
+        cin >> itemWeights[i];
     }
     
     cout << "Peso máximo de la mochila: ";
-    cin >> W;
+    cin >> maxWeight;
     
-    int beneficio_optimo = knapsack(N, valores, pesos, W);
-    cout << "Beneficio óptimo: " << beneficio_optimo << endl;
+    int optimalBenefit = knapsack(numberOfItems, itemValues, itemWeights, maxWeight);
+    cout << "Beneficio óptimo: " << optimalBenefit << endl;
     
     return 0;
 }
