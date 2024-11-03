@@ -1,8 +1,3 @@
-#include <iostream>
-#include <vector>
-#include <iomanip>
-
-using namespace std;
 
 /*
  * Descripción breve del programa: 
@@ -11,8 +6,20 @@ using namespace std;
  * Fecha de creación/modificación: 2024-10-31
  */
 
+#include <iostream>
+#include <vector>
+#include <iomanip>
+
+using namespace std;
+
 // Función para resolver el problema de la mochila
-int knapsack(int numberOfItems, vector<int> itemValues, vector<int> itemWeights, int maxWeight) {
+// Parámetros:
+//   - numberOfItems: número total de elementos disponibles
+//   - itemValues: vector que contiene los valores de cada elemento
+//   - itemWeights: vector que contiene los pesos de cada elemento
+//   - maxWeight: peso máximo que la mochila puede soportar
+// Retorno: el beneficio óptimo que se puede obtener
+int knapsack(int numberOfItems, const vector<int>& itemValues, const vector<int>& itemWeights, int maxWeight) {
     vector<vector<int>> dp(numberOfItems + 1, vector<int>(maxWeight + 1, 0));
 
     // Llenando la matriz dp
@@ -40,12 +47,14 @@ int knapsack(int numberOfItems, vector<int> itemValues, vector<int> itemWeights,
 
 // Función principal del programa
 int main() {
-    int numberOfItems, maxWeight;
+    int numberOfItems;
+    int maxWeight;
     
     cout << "Número de elementos: ";
     cin >> numberOfItems;
     
-    vector<int> itemValues(numberOfItems), itemWeights(numberOfItems);
+    vector<int> itemValues(numberOfItems);
+    vector<int> itemWeights(numberOfItems);
     
     cout << "Beneficios:" << endl;
     for (int i = 0; i < numberOfItems; ++i) {
