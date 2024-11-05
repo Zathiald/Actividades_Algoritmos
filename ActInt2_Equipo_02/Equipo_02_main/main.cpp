@@ -67,9 +67,9 @@ void tspApproximation(const vector<vector<int>>& graph) {
 
     // Imprimir el recorrido y el costo
     cout << "El recorrido:" << endl;
-    for (int p : path) {
-        cout << p;
-        if (p != 1) cout << " -> "; // No imprimir '->' después del último
+    for (int i = 0; i < path.size(); ++i) {
+        cout << path[i];
+        if (i < path.size() - 1) cout << " -> ";
     }
     cout << endl;
     cout << "El costo: " << cost << endl << endl;
