@@ -9,10 +9,28 @@
 
 using namespace std;
 
+/*
+ * Descripción: Programa para obtener rutas optimas para conexion de redes entre colonia.
+ * Autor: Samir Baidon Pardo A01705403,
+ *        Angel Francisco Garcia Guzman A01704203,
+ *        Alejandro Muñoz Shimano A01705550
+ * Fecha de creación: 2024-11-04
+ */
+
+
+/**
+ * Representa un borde con un origen, destino y peso.
+ */
 struct Edge {
     int origen, destino, peso;
 };
 
+/**
+ * Algoritmo de Floyd-Warshall para encontrar distancias mínimas entre todos los pares de nodos.
+ * 
+ * @param N Número de nodos.
+ * @param grafo Matriz de adyacencia con las distancias entre nodos.
+ */
 void floydWarshall(int N, vector<vector<int>>& grafo) {
     for (int k = 0; k < N; ++k) {
         for (int i = 0; i < N; ++i) {
@@ -25,6 +43,12 @@ void floydWarshall(int N, vector<vector<int>>& grafo) {
     }
 }
 
+/**
+ * Imprime las distancias mínimas entre colonias calculadas con el algoritmo de Floyd-Warshall.
+ * 
+ * @param N Número de nodos.
+ * @param grafo Matriz de distancias entre colonias.
+ */
 void calcularDistancias(int N, const vector<vector<int>>& grafo) {
     cout << "            Punto 01" << endl;
     for (int i = 0; i < N; i++) {
@@ -37,14 +61,20 @@ void calcularDistancias(int N, const vector<vector<int>>& grafo) {
     }
 }
 
+/**
+ * Punto 2: Realizar un recorrido simple (TSP aproximado).
+ * 
+ * @param grafo Matriz de distancias entre las colonias.
+ */
 void tspAproximado(const vector<vector<int>>& grafo) {
     cout << "            Punto 02" << endl;
-    int N = grafo.size();
-    vector<bool> visitado(N, false);
-    vector<int> recorrido;
-    int costo = 0;
 
-    int actual = 0; 
+    int N = grafo.size();
+    vector<int> recorrido;
+    vector<bool> visitado(N, false);
+    int costoTotal = 0;
+
+    int actual = 0;
     visitado[actual] = true;
     recorrido.push_back(actual + 1);
 
@@ -61,24 +91,32 @@ void tspAproximado(const vector<vector<int>>& grafo) {
 
         if (siguiente != -1) {
             visitado[siguiente] = true;
-            costo += minDistancia;
+            costoTotal += minDistancia;
             recorrido.push_back(siguiente + 1);
             actual = siguiente;
         }
     }
 
-    costo += grafo[actual][0];
+    costoTotal += grafo[actual][0];
     recorrido.push_back(1);
 
     cout << "El recorrido:" << endl;
-    for (int i = 0; i < recorrido.size(); ++i) {
+    for (size_t i = 0; i < recorrido.size(); i++) {
         cout << recorrido[i];
         if (i < recorrido.size() - 1) cout << " -> ";
     }
     cout << endl;
-    cout << "El costo: " << costo << endl << endl;
+    cout << "El costo: " << costoTotal << endl << endl;
 }
 
+/**
+ * Implementación del algoritmo Edmonds-Karp para encontrar el flujo máximo.
+ * 
+ * @param capacidades Matriz de capacidades entre nodos.
+ * @param fuente Nodo fuente.
+ * @param sumidero Nodo sumidero.
+ * @return El flujo máximo entre el nodo fuente y el sumidero.
+ */
 int edmondsKarp(const vector<vector<int>>& capacidades, int fuente, int sumidero) {
     int N = capacidades.size();
     vector<vector<int>> flujo(N, vector<int>(N, 0));
@@ -121,10 +159,23 @@ int edmondsKarp(const vector<vector<int>>& capacidades, int fuente, int sumidero
     return flujoTotal;
 }
 
+/**
+ * Calcula la distancia euclidiana entre dos puntos.
+ * 
+ * @param p1 Punto 1 con coordenadas (x, y).
+ * @param p2 Punto 2 con coordenadas (x, y).
+ * @return Distancia euclidiana entre p1 y p2.
+ */
 double calcularDistanciaEuclidiana(pair<int, int> p1, pair<int, int> p2) {
     return sqrt(pow(p1.first - p2.first, 2) + pow(p1.second - p2.second, 2));
 }
 
+/**
+ * Encuentra la central más cercana a una nueva estación.
+ * 
+ * @param posiciones Vector de posiciones de las estaciones.
+ * @param nuevaEstacion Coordenadas de la nueva estación.
+ */
 void calcularMinDistancias(const vector<pair<int, int>>& posiciones, const pair<int, int>& nuevaEstacion) {
     int N = posiciones.size();
     double distanciaMinima = numeric_limits<double>::max();
@@ -144,6 +195,17 @@ void calcularMinDistancias(const vector<pair<int, int>>& posiciones, const pair<
          << distanciaMinima << "." << endl;
 }
 
+/**
+ * Lee los datos de entrada desde un archivo.
+ * 
+ * @param archivo Nombre del archivo de entrada.
+ * @param N Número de nodos.
+ * @param grafo Matriz de adyacencia para el grafo.
+ * @param capacidades Matriz de capacidades para el grafo.
+ * @param posiciones Vector de posiciones de las estaciones.
+ * @param nuevaEstacion Coordenadas de la nueva estación.
+ * @return Verdadero si la lectura fue exitosa, falso en caso contrario.
+ */
 bool leerArchivoEntrada(const string& archivo, int& N, vector<vector<int>>& grafo, 
                         vector<vector<int>>& capacidades, vector<pair<int, int>>& posiciones, 
                         pair<int, int>& nuevaEstacion) {
@@ -187,6 +249,9 @@ bool leerArchivoEntrada(const string& archivo, int& N, vector<vector<int>>& graf
     return true;
 }
 
+/**
+ * Función principal del programa.
+ */
 int main() {
     int N;
     vector<vector<int>> grafo, capacidades;
