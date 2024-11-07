@@ -1,0 +1,7 @@
+Alejandro Muñoz Shimano A01705550
+Ángel Francisco García Guzmán A01704203
+Samir Baidon Pardo A01705403
+
+Alejandro: 
+Samir: Trabaje en el codigo, en especifico el punto 1 y 2 en donde se calculan las distancias y el recorrido simple
+Angel: 
