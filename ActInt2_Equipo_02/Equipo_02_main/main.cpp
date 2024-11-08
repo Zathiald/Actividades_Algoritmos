@@ -17,14 +17,6 @@ using namespace std;
  * Fecha de creación: 2024-11-04
  */
 
-
-/**
- * Representa un borde con un origen, destino y peso.
- */
-struct Edge {
-    int origen, destino, peso;
-};
-
 /**
  * Algoritmo de Floyd-Warshall para encontrar distancias mínimas entre todos los pares de nodos.
  * 
