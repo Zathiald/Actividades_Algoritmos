@@ -3,5 +3,5 @@ Alejandro Muñoz Shimano A01705550
 Samir Baidon Pardo A01705403
 
 Alejandro: 
-Samir: Trabaje en el codigo, en especifico el punto 1 y 2 en donde se calculan las distancias y el recorrido simple
+Samir: Trabaje en el codigo, en especifico el punto 1 y 2 en donde se calculan las distancias y el recorrido simple, ademas de ayudar con la presentacion y documento.
 Angel: 
